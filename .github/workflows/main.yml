@@ -88,5 +88,5 @@ jobs:
           java-version: 14
       - run: mvn -B package --file pom.xml -DskipTests
       - name: Run project
-        run: java -jar target/*.jar
+      - run: java -jar target/*.jar
 
