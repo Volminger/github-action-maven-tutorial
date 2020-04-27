@@ -21,7 +21,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>App</mainClass>
+                            <mainClass>JDBCExample</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
