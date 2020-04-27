@@ -81,11 +81,12 @@ jobs:
           --health-retries 5
     steps:
       # Downloads a copy of the code in your repository before running CI tests
-      - name: Compile and run integration test
+      - name: Build project
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
           java-version: 14
-        run: mvn -B package --file pom.xml -DskipTests
+      - run: mvn -B package --file pom.xml -DskipTests
+      - name: Run project
         run: java -jar target/*.jar
 
