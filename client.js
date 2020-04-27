@@ -1,29 +1,31 @@
-const { Client } = require('pg');
+const redis = require("redis");
 
-const pgclient = new Client({
-    host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_PORT,
-    user: 'postgres',
-    password: 'postgres',
-    database: 'postgres'
+// Creates a new Redis client
+// If REDIS_HOST is not set, the default host is localhost
+// If REDIS_PORT is not set, the default port is 6379
+const redisClient = redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT  
 });
 
-pgclient.connect();
-
-const table = 'CREATE TABLE student(id SERIAL PRIMARY KEY, firstName VARCHAR(40) NOT NULL, lastName VARCHAR(40) NOT NULL, age INT, address VARCHAR(80), email VARCHAR(40))'
-const text = 'INSERT INTO student(firstname, lastname, age, address, email) VALUES($1, $2, $3, $4, $5) RETURNING *'
-const values = ['Mona the', 'Octocat', 9, '88 Colin P Kelly Jr St, San Francisco, CA 94107, United States', 'octocat@github.com']
-
-pgclient.query(table, (err, res) => {
-    if (err) throw err
+redisClient.on("error", function(err) {
+    console.log("Error " + err);
 });
 
-pgclient.query(text, values, (err, res) => {
-    if (err) throw err
-});
+// Sets the key "octocat" to a value of "Mona the octocat"
+redisClient.set("octocat", "Mona the Octocat", redis.print);
+// Sets a key to "octocat", field to "species", and "value" to "Cat and Octopus"
+redisClient.hset("species", "octocat", "Cat and Octopus", redis.print);
+// Sets a key to "octocat", field to "species", and "value" to "Dinosaur and Octopus"
+redisClient.hset("species", "dinotocat", "Dinosaur and Octopus", redis.print);
+// Sets a key to "octocat", field to "species", and "value" to "Cat and Robot"
+redisClient.hset(["species", "robotocat", "Cat and Robot"], redis.print);
+// Gets all fields in "species" key
 
-pgclient.query('SELECT * FROM student', (err, res) => {
-    if (err) throw err
-    console.log(err, res.rows) // Print the data in student table
-    pgclient.end()
+redisClient.hkeys("species", function (err, replies) {
+    console.log(replies.length + " replies:");
+    replies.forEach(function (reply, i) {
+        console.log("    " + i + ": " + reply);
+    });
+    redisClient.quit();
 });
