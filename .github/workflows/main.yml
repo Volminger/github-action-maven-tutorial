@@ -26,7 +26,7 @@ jobs:
         restore-keys: ${{ runner.os }}-m2      
 
     - name: Build and test project with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file pom.xml assembly:single
     
   publish-job:
       runs-on: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
         - uses: actions/setup-java@v1
           with:
             java-version: 14
-        - run: mvn -B package --file pom.xml -DskipTests
+        - run: mvn -B package --file pom.xml assembly:single -DskipTests
         - run: mkdir staging && cp target/*.jar staging
         - uses: actions/upload-artifact@v1
           with:
@@ -84,7 +84,7 @@ jobs:
         java-version: 14
 
     - name: Build and test project with Maven
-      run: mvn -B package --file pom.xml -DskipTests
+      run: mvn -B package --file pom.xml assembly:single -DskipTests
     - name: Run project
       run: java -jar target/*.jar
       env:
