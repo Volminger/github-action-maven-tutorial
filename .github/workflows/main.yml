@@ -62,7 +62,7 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
-    container: maven:3.6.3-jdk-14-slim
+    container: maven:3.6.3-openjdk-14-slim
 
     # Service containers to run with `container-job`
     services:
