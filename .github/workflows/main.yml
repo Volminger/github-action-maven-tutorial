@@ -92,4 +92,8 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Run project
       run: java -jar target/*.jar
-
+      env:
+        # The hostname used to communicate with the PostgreSQL service container
+        POSTGRES_HOST: localhost
+        # The default PostgreSQL port
+        POSTGRES_PORT: 5432
