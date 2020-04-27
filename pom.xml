@@ -21,7 +21,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>RedisMain</mainClass>
+                            <mainClass>RedisJava</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
