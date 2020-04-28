@@ -36,14 +36,8 @@ jobs:
         restore-keys: ${{ runner.os }}-m2      
 
     - name: Build and test project with Maven
-      run: mvn -B package --file pom.xml -DskipTests
-    - name: Run project
-      run: java -jar target/*.jar
-      env:
-        # The hostname used to communicate with the Redis service container
-        REDIS_HOST: redis
-        # The default Redis port
-        REDIS_PORT: 6379
+      run: mvn -B package --file pom.xml
+
     
   publish-job:
       runs-on: ubuntu-latest
