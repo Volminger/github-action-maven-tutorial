@@ -9,10 +9,9 @@ public class TestRedisJava {
     }
 
     @Test
-    @DisplayName("Test Redis cache");
+    @DisplayName("Test Redis cache")
     void testRedisCache(){
         RedisJava cache = new RedisJava();
-        cache.get_cached_value()
-        assertEquals("42", cache);
+        assertEquals("42", cache.get_cached_value());
     }
 }
