@@ -6,40 +6,38 @@ public class JDBCExample {
     public JDBCExample() {
     }
 
-    public static void main(String[] var0) {
-        try {
-            Connection dbConnection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres",
-                                                            "postgres", "postgres");
-            Throwable var = null;
+    public static void main(String[] args)
+    {
+        Connection connection = null;
 
-            try {
-                if (dbConnection != null) {
-                    System.out.println("Succeeded to connect to the database...");
-                } else {
-                    System.out.println("Failed to make connection to database...");
-                }
-            } catch (Throwable var13) {
-                var = var13;
-                throw var13;
-            } finally {
-                if (dbConnection != null) {
-                    if (var != null) {
-                        try {
-                            dbConnection.close();
-                        } catch (Throwable var12) {
-                            var.addSuppressed(var12);
-                        }
-                    } else {
-                        dbConnection.close();
-                    }
-                }
+        try
+        {
+            // the postgresql driver string
+            Class.forName("org.postgresql.Driver").newInstance();
 
-            }
-        } catch (SQLException var15) {
-            System.err.format("SQL State: %s\n%s", var15.getSQLState(), var15.getMessage());
-        } catch (Exception var16) {
-            var16.printStackTrace();
+            // the postgresql url
+            String url = "jdbc:postgresql://localhost/postgres";
+
+            // get the postgresql database connection
+            connection = DriverManager.getConnection(url,"postgres", "postgres");
+
+            // now do whatever you want to do with the connection
+            // ...
+
         }
-
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            System.exit(2);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 }
