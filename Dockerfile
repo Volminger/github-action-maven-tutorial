@@ -1,3 +1,4 @@
+#apploactes at /workspace
 FROM maven:3.6.3-openjdk-14-slim AS build
 RUN mkdir -p /workspace
 WORKDIR /workspace
